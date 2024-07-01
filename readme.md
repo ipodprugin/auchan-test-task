@@ -16,9 +16,23 @@ python3 main.py
 
 ---
 
-Скрипт записывает в результирующий файл "развёрнутые" диапазоны.  
-Если это не требуется, можно решить задачу bash командой:
+Python скрипт записывает в результирующий файл "развёрнутые" диапазоны.  
+Если это не требуется, можно решить задачу таким небольшим bash скриптом:
 
 ```bash
-tr -d '\"' < {filepath} | tr ',' '\n' | sort -n > {outfile}
+#!/bin/bash
+
+start_time=$(date +%s.%N)
+
+for folder in $(find . -type d -name "TEST_Folder_*"); do
+  for file in $(find "$folder" -type f -name "TEST_*"); do
+    outfile=$(echo "$file" | sed 's/TEST_/TEST_AUCHAN_success_/g' | sed 's/\.[^.]*$/.txt/')
+    outfile=$(echo "$outfile" | sed 's/.*\///')
+    mkdir -p "Result"
+    tr -d '\"' < "$file" | tr ',' '\n' | sort -n > "Result/$outfile"
+  done
+done
+
+execution_time=$(echo "$(date +%s.%N) - $start_time" | bc)
+echo "Время выполнения: $execution_time секунд"
 ```
