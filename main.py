@@ -26,7 +26,7 @@ def handle_file(filepath: str):
         return
 
     filename = os.path.basename(filepath)
-    out_filename = "PY_TEST_AUCHAN_success_" + filename[-5:]
+    out_filename = "TEST_AUCHAN_success_" + filename[-5:]
     out_filepath = os.path.join(settings.OUTPUT_FOLDER, out_filename)
 
     with open(filepath, 'r') as f:
